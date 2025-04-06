@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>IEFP - CENTRO DE EMPREGO DA MAIA</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #00ff88;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h2 {
+      color: #ffffff;
+      font-size: 36px;
+      margin-bottom: 40px;
+    }
+    .contador-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+      margin-bottom: 40px;
+    }
+    .prefixo {
+      margin-right: 20px;
+    }
+    button {
+      font-size: 40px;
+      padding: 20px 40px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      background-color: #00ff88;
+      color: #111;
+      cursor: pointer;
+    }
+    img {
+      width: 120px;  /* Ajuste o tamanho da imagem conforme necessário */
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Símbolo do IEFP -->
+  <img src="IEFP.JPG" alt="Logo do IEFP">
+
+  <h2>IEFP - CENTRO DE EMPREGO DA MAIA</h2>
+
+  <div class="contador-box">
+    <span class="prefixo">B</span>
+    <span id="contador">0</span>
+  </div>
+
+  <button onclick="aumentar()">PRÓXIMA SENHA</button>
+  <button onclick="resetar()">RESET</button>
+
+  <!-- Som de beep alto -->
+  <audio id="somBip" preload="auto">
+    <source src="proxima senha.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let contagem = 0;
+    const contadorEl = document.getElementById("contador");
+    const somBip = document.getElementById("somBip");
+
+    function aumentar() {
+      contagem++;
+      contadorEl.innerText = contagem;
+      somBip.currentTime = 0;
+      somBip.play();
+    }
+
+    function resetar() {
+      contagem = 0;
+      contadorEl.innerText = contagem;
+    }
+  </script>
+</body>
+</html>
