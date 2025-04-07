@@ -14,72 +14,126 @@
       justify-content: center;
       height: 100vh;
       margin: 0;
+      position: relative;
     }
+
     h2 {
       color: #ffffff;
       font-size: 36px;
       margin-bottom: 40px;
     }
+
     .contador-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 120px;
+      text-align: center;
+      font-size: 100px;
       margin-bottom: 40px;
     }
-    .prefixo {
-      margin-right: 20px;
+
+    .botoes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 20px;
     }
+
+    .mesa-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     button {
-      font-size: 40px;
-      padding: 20px 40px;
-      margin: 10px;
+      font-size: 28px;
+      padding: 15px 30px;
       border: none;
       border-radius: 10px;
       background-color: #00ff88;
       color: #111;
       cursor: pointer;
     }
+
+    .contador-mesa {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .reset-btn {
+      font-size: 16px;
+      padding: 8px 16px;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+
     img {
-      width: 120px;  /* Ajuste o tamanho da imagem conforme necessário */
+      width: 120px;
       margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <!-- Símbolo do IEFP -->
   <img src="IEFP.JPG" alt="Logo do IEFP">
 
   <h2>IEFP - CENTRO DE EMPREGO DA MAIA</h2>
 
   <div class="contador-box">
-    <span class="prefixo">B</span>
-    <span id="contador">0</span>
+    <div id="senha">B 0</div>
+    <div id="mesa">MESA 1</div>
   </div>
 
-  <button onclick="aumentar()">PRÓXIMA SENHA</button>
-  <button onclick="resetar()">RESET</button>
+  <div class="botoes">
+    <div class="mesa-container">
+      <button onclick="aumentar(1)">MESA 1</button>
+      <div id="contadorMesa1" class="contador-mesa">Atendimentos: 0</div>
+    </div>
+    <div class="mesa-container">
+      <button onclick="aumentar(2)">MESA 2</button>
+      <div id="contadorMesa2" class="contador-mesa">Atendimentos: 0</div>
+    </div>
+    <div class="mesa-container">
+      <button onclick="aumentar(3)">MESA 3</button>
+      <div id="contadorMesa3" class="contador-mesa">Atendimentos: 0</div>
+    </div>
+    <div class="mesa-container">
+      <button onclick="aumentar(4)">MESA 4</button>
+      <div id="contadorMesa4" class="contador-mesa">Atendimentos: 0</div>
+    </div>
+  </div>
 
-  <!-- Som de beep alto -->
+  <button class="reset-btn" onclick="resetar()">RESET</button>
+
   <audio id="somBip" preload="auto">
     <source src="proxima senha.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    let contagem = 0;
-    const contadorEl = document.getElementById("contador");
+    let contador = 0;
+    let atendimentosPorMesa = [0, 0, 0, 0, 0]; // índice 0 ignorado para facilitar (mesa 1 = índice 1)
+
+    const senhaEl = document.getElementById("senha");
+    const mesaEl = document.getElementById("mesa");
     const somBip = document.getElementById("somBip");
 
-    function aumentar() {
-      contagem++;
-      contadorEl.innerText = contagem;
+    function aumentar(numMesa) {
+      contador++;
+      atendimentosPorMesa[numMesa]++;
+      senhaEl.innerText = `B ${contador}`;
+      mesaEl.innerText = `MESA ${numMesa}`;
+      document.getElementById(`contadorMesa${numMesa}`).innerText = `Atendimentos: ${atendimentosPorMesa[numMesa]}`;
       somBip.currentTime = 0;
       somBip.play();
     }
 
     function resetar() {
-      contagem = 0;
-      contadorEl.innerText = contagem;
+      contador = 0;
+      atendimentosPorMesa = [0, 0, 0, 0, 0];
+      senhaEl.innerText = `B 0`;
+      mesaEl.innerText = `MESA 1`;
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`contadorMesa${i}`).innerText = `Atendimentos: 0`;
+      }
     }
   </script>
 </body>
